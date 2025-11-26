@@ -1,0 +1,5 @@
+permission_id,enrollment_id,permission_date,start_time,end_time,reason,description,evidence,status,submitted_at,approved_at,approved_by,created_at,updated_at
+1,57,2025-11-24,01:00:00,02:00:00,Family Emergency,werfwe,,pending,2025-11-16 08:12:32.78499,,,2025-11-16 08:12:32.78499,2025-11-16 08:12:32.78499
+2,53,2025-11-18,07:00:00,09:00:00,Sick,yurijslaka,,pending,2025-11-17 15:13:01.8665,,,2025-11-17 15:13:01.8665,2025-11-17 15:13:01.8665
+3,57,2025-11-24,01:00:00,02:00:00,Medical Appointment,9wjaowkwj,,pending,2025-11-17 15:14:52.09604,,,2025-11-17 15:14:52.09604,2025-11-17 15:14:52.09604
+4,57,2025-12-01,01:00:00,02:00:00,Medical Appointment,hejwjsns,,pending,2025-11-18 06:17:14.632461,,,2025-11-18 06:17:14.632461,2025-11-18 06:17:14.632461

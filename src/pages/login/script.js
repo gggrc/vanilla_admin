@@ -7,9 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const usernameInput = document.getElementById('username');
     const loginButton = document.querySelector('.login-button');
 
-    // Simple demo credentials — replace with real auth in production
-    const VALID_USERNAME = 'a';
-    const VALID_PASSWORD = 'a';
+    // Backend API URL
+    const API_URL = 'http://localhost:3000/api';
 
     // Password visibility toggle
     if (passwordToggle && passwordInput) {
@@ -32,35 +31,61 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Form submission handling
     if (loginForm) {
-        loginForm.addEventListener('submit', function (e) {
+        loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const username = usernameInput?.value?.trim() ?? '';
             const password = passwordInput?.value ?? '';
 
-            hideError();
+            // Validation
+            if (!username || !password) {
+                showError('Please enter both username and password');
+                return;
+            }
 
-            if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-                showSuccess();
-                // Redirect to dashboard (correct relative path)
-                setTimeout(() => {
-                    window.location.href = '../dashboard/index.html';
-                }, 500);
-            } else {
-                showError();
-                if (passwordInput) passwordInput.value = '';
-                if (username !== VALID_USERNAME) {
-                    usernameInput?.focus();
-                    usernameInput?.select();
+            hideError();
+            showLoading();
+
+            try {
+                // Call backend API
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Store user data in localStorage
+                    localStorage.setItem('user', JSON.stringify(data.data.user));
+                    
+                    showSuccess();
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = '../dashboard/index.html';
+                    }, 500);
                 } else {
+                    // Login failed - show specific error message
+                    showError(data.message || 'Invalid username or password');
+                    if (passwordInput) passwordInput.value = '';
                     passwordInput?.focus();
+                    resetButton();
                 }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Server connection error. Please try again.');
+                resetButton();
             }
         });
     }
 
-    function showError() {
+    function showError(message = 'Invalid username or password') {
         if (!errorMessage) return;
+        errorMessage.textContent = message;
         errorMessage.style.display = 'block';
         errorMessage.classList.add('shake');
         setTimeout(() => errorMessage.classList.remove('shake'), 500);
@@ -71,11 +96,27 @@ document.addEventListener('DOMContentLoaded', function () {
         errorMessage.style.display = 'none';
     }
 
-    function showSuccess() {
+    function showLoading() {
         if (!loginButton) return;
         loginButton.textContent = 'Logging in...';
+        loginButton.disabled = true;
         loginButton.style.pointerEvents = 'none';
+        loginButton.style.opacity = '0.7';
+    }
+
+    function showSuccess() {
+        if (!loginButton) return;
+        loginButton.textContent = 'Success!';
         loginButton.style.backgroundColor = '#28a745';
+    }
+
+    function resetButton() {
+        if (!loginButton) return;
+        loginButton.textContent = 'Sign In';
+        loginButton.disabled = false;
+        loginButton.style.pointerEvents = 'auto';
+        loginButton.style.opacity = '1';
+        loginButton.style.backgroundColor = '';
     }
 
     // Remove error when user types

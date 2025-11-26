@@ -114,18 +114,21 @@
 .userlist-manage .condition-container {
   background-color: #ffffff;
   border-radius: 12px;
-  padding: 24px 32px;
+  padding: 28px 36px;
   margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e9ecef;
 }
 
 .userlist-manage .section-title {
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 22px;
   color: #2c2d32;
-  margin-bottom: 20px;
-  letter-spacing: 0;
+  margin-bottom: 24px;
+  letter-spacing: -0.3px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f0f0f0;
 }
 
 /* Detail Grid */
@@ -171,11 +174,13 @@
 
 .userlist-manage .table-header {
   display: grid;
-  grid-template-columns: 1fr 80px 80px 80px 80px 80px;
-  gap: 8px;
+  grid-template-columns: 100px 2fr 80px 80px 80px 80px 80px;
+  gap: 12px;
   margin-bottom: 12px;
-  padding: 8px 0;
+  padding: 12px 8px;
   border-bottom: 2px solid #e9ecef;
+  background-color: #f8f9fa;
+  border-radius: 8px;
 }
 
 .userlist-manage .header-cell {
@@ -183,10 +188,24 @@
   font-weight: 600;
   font-size: 14px;
   text-align: center;
-  padding: 8px 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.userlist-manage .class-col { color: #2c2d32; }
+.userlist-manage .class-code-col {
+  text-align: left;
+  justify-content: flex-start;
+  color: #2c2d32;
+}
+
+.userlist-manage .class-name-col {
+  text-align: left;
+  justify-content: flex-start;
+  color: #2c2d32;
+}
+
 .userlist-manage .present-col { color: #10b981; }
 .userlist-manage .late-col { color: #f59e0b; }
 .userlist-manage .absent-col { color: #ef4444; }
@@ -195,11 +214,17 @@
 
 .userlist-manage .table-row {
   display: grid;
-  grid-template-columns: 1fr 80px 80px 80px 80px 80px;
-  gap: 8px;
+  grid-template-columns: 100px 2fr 80px 80px 80px 80px 80px;
+  gap: 12px;
   margin-bottom: 8px;
-  padding: 8px 0;
+  padding: 12px 8px;
   border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+  border-radius: 6px;
+}
+
+.userlist-manage .table-row:hover {
+  background-color: #f8f9fa;
 }
 
 .userlist-manage .table-row:last-child {
@@ -211,11 +236,22 @@
   font-weight: 400;
   font-size: 14px;
   text-align: center;
-  padding: 6px 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userlist-manage .class-code {
+  text-align: left;
+  justify-content: flex-start;
+  font-weight: 500;
+  color: #2c2d32;
 }
 
 .userlist-manage .class-name {
   text-align: left;
+  justify-content: flex-start;
   font-weight: 500;
   color: #2c2d32;
 }
@@ -412,8 +448,8 @@
 
   .userlist-manage .table-header,
   .userlist-manage .table-row {
-    grid-template-columns: 1fr 60px 60px 60px 60px 60px;
-    gap: 4px;
+    grid-template-columns: 80px 1.5fr 60px 60px 60px 60px 60px;
+    gap: 6px;
   }
 
   .userlist-manage .header-cell,

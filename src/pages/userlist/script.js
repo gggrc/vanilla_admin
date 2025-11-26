@@ -43,35 +43,142 @@ function filterBy(tolerance) {
   closeFilter();
 }
 
-// Function to navigate to user detail page
-function navigateToUserDetail(userId) {
-  window.location.href = `../userlist_manage/index.html?id=${userId}`;
+// ========================================
+// API CONFIGURATION
+// ========================================
+const API_URL = 'http://localhost:3000/api';
+
+// ========================================
+// AUTHENTICATION CHECK
+// ========================================
+function checkAuth() {
+  const userStr = localStorage.getItem('user');
+  if (!userStr) {
+    window.location.href = '../login/index.html';
+    return null;
+  }
+  
+  const user = JSON.parse(userStr);
+  if (user.role !== 'admin') {
+    alert('Access denied. Admin only.');
+    window.location.href = '../login/index.html';
+    return null;
+  }
+  
+  return user;
 }
 
-// Add click event listeners to table rows when page loads
-document.addEventListener('DOMContentLoaded', function() {
-  // Map user rows to their IDs (based on order in the table)
-  const userRows = document.querySelectorAll('.frame-4, .frame-6, .frame-7, .frame-8, .frame-9, .frame-10, .frame-11');
+// ========================================
+// FETCH STUDENTS FROM API
+// ========================================
+async function fetchStudents() {
+  try {
+    const response = await fetch(`${API_URL}/users/students`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      displayStudents(data.data.students);
+    } else {
+      console.error('Failed to fetch students:', data.message);
+      showError('Failed to load student data');
+    }
+  } catch (error) {
+    console.error('Error fetching students:', error);
+    showError('Connection error. Please check if backend is running.');
+  }
+}
+
+// ========================================
+// DISPLAY STUDENTS IN TABLE
+// ========================================
+function displayStudents(students) {
+  const container = document.querySelector('.frame-2');
+  if (!container) {
+    console.error('Container not found');
+    return;
+  }
+
+  // Keep header row
+  const header = container.querySelector('.frame-3');
   
-  userRows.forEach((row, index) => {
-    // Add 1 to index since user IDs start from 1
-    const userId = index + 1;
-    
-    // Add click event listener
-    row.addEventListener('click', function() {
-      navigateToUserDetail(userId);
-    });
-    
-    // Add hover cursor style
+  // Clear all content (including loading message and old data)
+  container.innerHTML = '';
+  
+  // Re-add header
+  if (header) {
+    container.appendChild(header);
+  }
+
+  // Check if no students
+  if (!students || students.length === 0) {
+    const noData = document.createElement('div');
+    noData.style.textAlign = 'center';
+    noData.style.padding = '40px';
+    noData.style.color = '#666';
+    noData.innerHTML = '<p>No students found</p>';
+    container.appendChild(noData);
+    return;
+  }
+
+  // Add student rows
+  students.forEach((student, index) => {
+    const row = document.createElement('div');
+    // Alternate row classes
+    row.className = index % 2 === 0 ? 'frame-4' : 'frame-6';
     row.style.cursor = 'pointer';
-    
-    // Add hover effect
-    row.addEventListener('mouseenter', function() {
-      this.style.backgroundColor = '#f8f9fa';
+
+    row.innerHTML = `
+      <div class="frame-5"><div class="text-wrapper-3">${student.nim || '-'}</div></div>
+      <div class="frame-5"><div class="text-wrapper-3">${student.full_name}</div></div>
+      <div class="frame-5"><div class="text-wrapper-3">2023</div></div>
+    `;
+
+    // Click to view detail
+    row.addEventListener('click', () => {
+      window.location.href = `../userlist_manage/index.html?id=${student.user_id}`;
     });
-    
-    row.addEventListener('mouseleave', function() {
-      this.style.backgroundColor = '';
+
+    // Hover effects
+    row.addEventListener('mouseenter', () => {
+      row.style.backgroundColor = '#f8f9fa';
     });
+
+    row.addEventListener('mouseleave', () => {
+      row.style.backgroundColor = '';
+    });
+
+    container.appendChild(row);
   });
+
+  console.log(`✅ Displayed ${students.length} students from database`);
+}
+
+// ========================================
+// ERROR DISPLAY
+// ========================================
+function showError(message) {
+  console.error(message);
+  // Only show alert for critical errors, not for refresh failures
+  // alert(message);
+}
+
+// ========================================
+// INITIALIZE PAGE
+// ========================================
+document.addEventListener('DOMContentLoaded', function() {
+  // Check authentication
+  const user = checkAuth();
+  if (!user) return;
+
+  // Fetch students
+  fetchStudents();
+
+  // Auto-refresh every 30 seconds
+  setInterval(fetchStudents, 30000);
 });

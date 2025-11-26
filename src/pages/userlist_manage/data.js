@@ -1,340 +1,229 @@
-// Data users dengan informasi presensi lengkap
-const usersData = {
-  1: {
-    name: "Rafelixa Reynard Isak",
-    nim: "01082230017",
-    cohort: "2023",
-    faculty: "Faculty of Information and Technology/ Informatics",
-    classes: [
-      { name: "KKKR 1543", present: 4, late: 3, absent: 0, sick: 0, excused: 0, total: 16 }, // Reached: Late = 3
-      { name: "KKLR 1544", present: 2, late: 4, absent: 1, sick: 0, excused: 0, total: 16 }, // Exceeded: Late > 3
-      { name: "PMLR 1547", present: 4, late: 0, absent: 3, sick: 0, excused: 0, total: 16 }, // Reached: Absent = 3
-      { name: "PAPR 1550", present: 5, late: 2, absent: 0, sick: 0, excused: 0, total: 16 }, // Normal
-      { name: "PALR 1582", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "IKSR 1586", present: 6, late: 1, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PPWR 1590", present: 5, late: 2, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PPLR 1591", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKJR 1597", present: 6, late: 1, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKLR 1613", present: 5, late: 1, absent: 1, sick: 0, excused: 0, total: 16 }
-    ],
-    toleranceLimit: 3
-  },
-  2: {
-    name: "Teofilus Satria Rada Insani",
-    nim: "01082230015",
-    cohort: "2023",
-    faculty: "Faculty of Information and Technology/ Informatics",
-    classes: [
-      { name: "KKKR 1543", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKLR 1544", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PMLR 1547", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PAPR 1550", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PALR 1582", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "IKSR 1586", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PPWR 1590", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PPLR 1591", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKJR 1597", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKLR 1613", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 }
-    ],
-    toleranceLimit: 3
-  },
-  3: {
-    name: "Joko Armando Setiabudi",
-    nim: "01082230016",
-    cohort: "2023",
-    faculty: "Faculty of Information and Technology/ Informatics",
-    classes: [
-      { name: "KKKR 1543", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKLR 1544", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PMLR 1547", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PAPR 1550", present: 4, late: 0, absent: 3, sick: 0, excused: 0, total: 16 }, // Reached: Absent = 3
-      { name: "PALR 1582", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "IKSR 1586", present: 3, late: 0, absent: 4, sick: 0, excused: 0, total: 16 }, // Exceeded: Absent > 3
-      { name: "PPWR 1590", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PPLR 1591", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKJR 1597", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKLR 1613", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 }
-    ],
-    toleranceLimit: 3
-  },
-  4: {
-    name: "Putra Futsal",
-    nim: "01082230023",
-    cohort: "2023",
-    faculty: "Faculty of Information and Technology/ Informatics",
-    classes: [
-      { name: "KKKR 1543", present: 3, late: 1, absent: 1, sick: 1, excused: 1, total: 16 },
-      { name: "KKLR 1544", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PMLR 1547", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PAPR 1550", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PALR 1582", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "IKSR 1586", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PPWR 1590", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PPLR 1591", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKJR 1597", present: 4, late: 1, absent: 2, sick: 0, excused: 0, total: 16 }, // Reached: Late + Absent = 3
-      { name: "KKLR 1613", present: 3, late: 2, absent: 2, sick: 0, excused: 0, total: 16 }  // Exceeded: Late + Absent = 4 > 3
-    ],
-    toleranceLimit: 3
-  },
-  5: {
-    name: "Benaya Simamora",
-    nim: "01082230031",
-    cohort: "2023",
-    faculty: "Faculty of Information and Technology/ Informatics",
-    classes: [
-      { name: "KKKR 1543", present: 6, late: 1, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKLR 1544", present: 5, late: 2, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PMLR 1547", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PAPR 1550", present: 5, late: 2, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PALR 1582", present: 6, late: 1, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "IKSR 1586", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PPWR 1590", present: 5, late: 2, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PPLR 1591", present: 4, late: 3, absent: 0, sick: 0, excused: 0, total: 16 }, // Reached: Late = 3
-      { name: "KKJR 1597", present: 6, late: 1, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKLR 1613", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 }
-    ],
-    toleranceLimit: 3
-  },
-  6: {
-    name: "Ben Majesty Adrah Nesta",
-    nim: "01082230018",
-    cohort: "2023",
-    faculty: "Faculty of Information and Technology/ Informatics",
-    classes: [
-      { name: "KKKR 1543", present: 3, late: 0, absent: 4, sick: 0, excused: 0, total: 16 }, // Exceeded: Absent > 3
-      { name: "KKLR 1544", present: 3, late: 0, absent: 4, sick: 0, excused: 0, total: 16 }, // Exceeded: Absent > 3
-      { name: "PMLR 1547", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PAPR 1550", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PALR 1582", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "IKSR 1586", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PPWR 1590", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "PPLR 1591", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 },
-      { name: "KKJR 1597", present: 4, late: 2, absent: 1, sick: 0, excused: 0, total: 16 }, // Reached: Late + Absent = 3
-      { name: "KKLR 1613", present: 7, late: 0, absent: 0, sick: 0, excused: 0, total: 16 }
-    ],
-    toleranceLimit: 3
-  },
-  7: {
-    name: "Simon",
-    nim: "01082230010",
-    cohort: "2023",
-    faculty: "Faculty of Information and Technology/ Informatics",
-    classes: [
-      { name: "KKKR 1543", present: 2, late: 1, absent: 4, sick: 0, excused: 0, total: 16 }, // Exceeded: Absent > 3
-      { name: "KKLR 1544", present: 0, late: 2, absent: 5, sick: 0, excused: 0, total: 16 }, // Exceeded: Late + Absent > 3, Absent > 3
-      { name: "PMLR 1547", present: 3, late: 1, absent: 3, sick: 0, excused: 0, total: 16 }, // Exceeded: Late + Absent > 3, Absent = 3
-      { name: "PAPR 1550", present: 5, late: 0, absent: 2, sick: 0, excused: 0, total: 16 },
-      { name: "PALR 1582", present: 1, late: 2, absent: 4, sick: 0, excused: 0, total: 16 }, // Exceeded: Late + Absent > 3, Absent > 3
-      { name: "IKSR 1586", present: 3, late: 1, absent: 3, sick: 0, excused: 0, total: 16 }, // Exceeded: Late + Absent > 3, Absent = 3
-      { name: "PPWR 1590", present: 1, late: 1, absent: 5, sick: 0, excused: 0, total: 16 }, // Exceeded: Late + Absent > 3, Absent > 3
-      { name: "PPLR 1591", present: 5, late: 0, absent: 2, sick: 0, excused: 0, total: 16 },
-      { name: "KKJR 1597", present: 1, late: 2, absent: 4, sick: 0, excused: 0, total: 16 }, // Exceeded: Late + Absent > 3, Absent > 3
-      { name: "KKLR 1613", present: 3, late: 1, absent: 3, sick: 0, excused: 0, total: 16 }  // Exceeded: Late + Absent > 3, Absent = 3
-    ],
-    toleranceLimit: 3
-  }
-};
+// ========================================
+// USER LIST MANAGE - STUDENT DETAIL PAGE
+// Fetch real data from Supabase via Backend API
+// ========================================
 
-// Fungsi untuk mendapatkan parameter ID dari URL
+// API Configuration
+const API_URL = 'http://localhost:3000/api';
+
+// ========================================
+// AUTHENTICATION CHECK
+// ========================================
+function checkAuth() {
+  const userStr = localStorage.getItem('user');
+  if (!userStr) {
+    window.location.href = '../login/index.html';
+    return null;
+  }
+  
+  const user = JSON.parse(userStr);
+  if (user.role !== 'admin') {
+    alert('Access denied. Admin only.');
+    window.location.href = '../login/index.html';
+    return null;
+  }
+  
+  return user;
+}
+
+// ========================================
+// GET USER ID FROM URL
+// ========================================
 function getUserIdFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get('id');
 }
 
-// Fungsi untuk menghitung total tolerance issues (late + absent)
-function calculateToleranceTotal(classData) {
-  return classData.late + classData.absent;
-}
+// ========================================
+// FETCH STUDENT DETAIL FROM API
+// ========================================
+async function fetchStudentDetail(userId) {
+  try {
+    const response = await fetch(`${API_URL}/users/students/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
 
-// Fungsi untuk menentukan status toleransi
-function getToleranceStatus(user) {
-  const exceededClasses = [];
-  const reachedClasses = [];
-  
-  user.classes.forEach(classData => {
-    const toleranceTotal = calculateToleranceTotal(classData);
-    const late = classData.late;
-    const absent = classData.absent;
-    
-    // Check for Exceeded Tolerance (Red Alert)
-    const isExceeded = (
-      toleranceTotal > user.toleranceLimit ||  // Total Late + Absent > 3
-      late > user.toleranceLimit ||            // Total Late > 3
-      absent > user.toleranceLimit             // Total Absent > 3
-    );
-    
-    // Check for Reached Tolerance (Yellow Alert) - only if not exceeded
-    const isReached = !isExceeded && (
-      toleranceTotal === user.toleranceLimit || // Total Late + Absent = 3
-      late === user.toleranceLimit ||           // Total Late = 3
-      absent === user.toleranceLimit            // Total Absent = 3
-    );
-    
-    if (isExceeded) {
-      exceededClasses.push({
-        name: classData.name,
-        late: late,
-        absent: absent,
-        total: toleranceTotal,
-        reasons: getToleranceReasons(late, absent, toleranceTotal, user.toleranceLimit, 'exceeded')
-      });
-    } else if (isReached) {
-      reachedClasses.push({
-        name: classData.name,
-        late: late,
-        absent: absent,
-        total: toleranceTotal,
-        reasons: getToleranceReasons(late, absent, toleranceTotal, user.toleranceLimit, 'reached')
-      });
-    }
-  });
-  
-  return { exceededClasses, reachedClasses };
-}
+    const data = await response.json();
 
-// Fungsi untuk menentukan alasan toleransi
-function getToleranceReasons(late, absent, total, limit, type) {
-  const reasons = [];
-  
-  if (type === 'exceeded') {
-    if (total > limit) reasons.push(`Late + Absent: ${total} > ${limit}`);
-    if (late > limit) reasons.push(`Late: ${late} > ${limit}`);
-    if (absent > limit) reasons.push(`Absent: ${absent} > ${limit}`);
-  } else if (type === 'reached') {
-    if (total === limit) reasons.push(`Late + Absent: ${total} = ${limit}`);
-    if (late === limit) reasons.push(`Late: ${late} = ${limit}`);
-    if (absent === limit) reasons.push(`Absent: ${absent} = ${limit}`);
-  }
-  
-  return reasons;
-}
-
-// Fungsi untuk memuat data user ke halaman
-function loadUserData() {
-  const userId = getUserIdFromURL();
-  
-  console.log('Loading user data for ID:', userId);
-  
-  if (!userId || !usersData[userId]) {
-    // Jika tidak ada ID atau user tidak ditemukan, gunakan default ID 6 (Ben Majesty) untuk testing
-    console.log('User not found, using default ID: 6');
-    const defaultUserId = '6';
-    if (!usersData[defaultUserId]) {
-      console.log('Default user not found, redirecting to userlist');
+    if (data.success) {
+      displayStudentDetail(data.data);
+    } else {
+      console.error('Failed to fetch student detail:', data.message);
+      alert('Student not found');
       window.location.href = '../userlist/index.html';
-      return;
     }
-    
-    const user = usersData[defaultUserId];
-    console.log('Using default user data:', user);
-    updatePageContent(user);
-    return;
+  } catch (error) {
+    console.error('Error fetching student detail:', error);
+    alert('Connection error. Please check if backend is running.');
   }
-  
-  const user = usersData[userId];
-  console.log('User data:', user);
-  
-  updatePageContent(user);
 }
 
-// Fungsi untuk update konten halaman
-function updatePageContent(user) {
-  // Update detail section
-  const detailValues = document.querySelectorAll('.detail-value');
-  if (detailValues.length >= 4) {
-    detailValues[0].textContent = user.name;
-    detailValues[1].textContent = user.nim;
-    detailValues[2].textContent = user.cohort;
-    detailValues[3].textContent = user.faculty;
+// ========================================
+// DISPLAY STUDENT DETAIL
+// ========================================
+function displayStudentDetail(data) {
+  const { student, courses, tolerance } = data;
+
+  // Update basic info
+  const detailRows = document.querySelectorAll('.detail-row');
+  if (detailRows.length >= 4) {
+    detailRows[0].querySelector('.detail-value').textContent = student.full_name;
+    detailRows[1].querySelector('.detail-value').textContent = student.nim;
+    detailRows[2].querySelector('.detail-value').textContent = '2023';
+    detailRows[3].querySelector('.detail-value').textContent = 'Faculty of Information and Technology/ Informatics';
   }
 
   // Update class information table
-  const tableRows = document.querySelectorAll('.table-row');
-  user.classes.forEach((classData, index) => {
-    if (tableRows[index]) {
-      const cells = tableRows[index].querySelectorAll('.table-cell');
-      if (cells.length >= 6) {
-        cells[0].textContent = classData.name;
-        cells[1].textContent = `${classData.present}/${classData.total}`;
-        cells[2].textContent = `${classData.late}/${classData.total}`;
-        cells[3].textContent = `${classData.absent}/${classData.total}`;
-        cells[4].textContent = `${classData.sick}/${classData.total}`;
-        cells[5].textContent = `${classData.excused}/${classData.total}`;
-      }
-    }
-  });
+  updateClassTable(courses);
 
-  // Update condition section
-  const toleranceStatus = getToleranceStatus(user);
-  console.log('Tolerance status:', toleranceStatus);
+  // Update condition alerts
+  updateConditionAlerts(tolerance);
+
+  console.log('Student detail displayed successfully');
+}
+
+// ========================================
+// UPDATE CLASS TABLE
+// ========================================
+function updateClassTable(courses) {
+  const tableContainer = document.querySelector('.class-table');
+  if (!tableContainer) return;
+
+  // Keep header
+  const header = tableContainer.querySelector('.table-header');
   
-  const conditionAlertsDiv = document.querySelector('.condition-alerts');
-  const conditionDescription = document.querySelector('.condition-description');  if (toleranceStatus.exceededClasses.length > 0 || toleranceStatus.reachedClasses.length > 0) {
-    conditionAlertsDiv.style.display = 'block';
-    conditionDescription.textContent = 'Student has attendance issues in the following courses:';
-    
-    // Show exceeded tolerance alert
-    const exceededAlert = conditionAlertsDiv.querySelector('.alert.exceeded');
-    if (toleranceStatus.exceededClasses.length > 0) {
-      exceededAlert.style.display = 'block';
-      const exceededClassesDiv = exceededAlert.querySelector('.alert-classes');
-      exceededClassesDiv.innerHTML = '';
-      
-      toleranceStatus.exceededClasses.forEach(classInfo => {
-        const classItem = document.createElement('div');
-        classItem.className = 'class-alert-item';
-        
-        classItem.innerHTML = `
-          <div>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div class="class-alert-name">${classInfo.name}</div>
-              <div class="class-alert-details">
-                <span class="class-alert-late">Late: ${classInfo.late}</span>
-                <span class="class-alert-absent">Absent: ${classInfo.absent}</span>
-                <span class="class-alert-total">Total: ${classInfo.total}/3</span>
-              </div>
-            </div>
-          </div>
-        `;
-        exceededClassesDiv.appendChild(classItem);
-      });
-    } else {
-      exceededAlert.style.display = 'none';
-    }
-    
-    // Show reached tolerance alert
-    const reachedAlert = conditionAlertsDiv.querySelector('.alert.reached');
-    if (toleranceStatus.reachedClasses.length > 0) {
-      reachedAlert.style.display = 'block';
-      const reachedClassesDiv = reachedAlert.querySelector('.alert-classes');
-      reachedClassesDiv.innerHTML = '';
-      
-      toleranceStatus.reachedClasses.forEach(classInfo => {
-        const classItem = document.createElement('div');
-        classItem.className = 'class-alert-item';
-        
-        classItem.innerHTML = `
-          <div>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div class="class-alert-name">${classInfo.name}</div>
-              <div class="class-alert-details">
-                <span class="class-alert-late">Late: ${classInfo.late}</span>
-                <span class="class-alert-absent">Absent: ${classInfo.absent}</span>
-                <span class="class-alert-total">Total: ${classInfo.total}/3</span>
-              </div>
-            </div>
-          </div>
-        `;
-        reachedClassesDiv.appendChild(classItem);
-      });
-    } else {
-      reachedAlert.style.display = 'none';
-    }
-  } else {
-    conditionAlertsDiv.style.display = 'none';
-    conditionDescription.textContent = 'Student has not exceeded or reached the tolerance limit for any courses.';
+  // Clear all rows
+  tableContainer.innerHTML = '';
+  
+  // Re-add header
+  if (header) {
+    tableContainer.appendChild(header);
+  }
+
+  // Add course rows
+  courses.forEach(course => {
+    const row = document.createElement('div');
+    row.className = 'table-row';
+
+    row.innerHTML = `
+      <div class="table-cell class-code">${course.course_code}</div>
+      <div class="table-cell class-name">${course.course_name}</div>
+      <div class="table-cell present-cell">${course.attendance.present}/16</div>
+      <div class="table-cell late-cell">${course.attendance.late}/16</div>
+      <div class="table-cell absent-cell">${course.attendance.absent}/16</div>
+      <div class="table-cell sick-cell">${course.attendance.sick}/16</div>
+      <div class="table-cell excused-cell">${course.attendance.excused}/16</div>
+    `;
+
+    tableContainer.appendChild(row);
+  });
+}
+
+// ========================================
+// UPDATE CONDITION ALERTS
+// ========================================
+function updateConditionAlerts(tolerance) {
+  const alertsContainer = document.querySelector('.condition-alerts');
+  if (!alertsContainer) return;
+
+  // Clear existing alerts
+  alertsContainer.innerHTML = '';
+
+  if (!tolerance.has_issues) {
+    alertsContainer.innerHTML = `
+      <p style="color: #10b981; text-align: center; padding: 20px; margin: 0;">
+        ✓ No tolerance issues detected for this student.
+      </p>
+    `;
+    return;
+  }
+
+  // Show exceeded tolerance (red alert)
+  if (tolerance.exceeded.length > 0) {
+    const exceededAlert = createAlert(
+      'exceeded',
+      'Exceeded Tolerance Limit',
+      'The following courses have exceeded tolerance limits:',
+      tolerance.exceeded
+    );
+    alertsContainer.appendChild(exceededAlert);
+  }
+
+  // Show reached tolerance (yellow alert)
+  if (tolerance.reached.length > 0) {
+    const reachedAlert = createAlert(
+      'reached',
+      'Reached Tolerance Limit',
+      'The following courses have reached tolerance limits:',
+      tolerance.reached
+    );
+    alertsContainer.appendChild(reachedAlert);
   }
 }
 
-// Load data when page loads
-document.addEventListener('DOMContentLoaded', loadUserData);
+// ========================================
+// CREATE ALERT ELEMENT
+// ========================================
+function createAlert(type, title, subtitle, courses) {
+  const alert = document.createElement('div');
+  alert.className = `alert ${type}`;
+
+  const icon = type === 'exceeded' ? 'fa-exclamation-triangle' : 'fa-exclamation-circle';
+
+  let coursesHTML = '';
+  courses.forEach(course => {
+    coursesHTML += `
+      <div class="class-alert-item">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="class-alert-name">${course.course_code}</div>
+            <div class="class-alert-details">
+              Late: ${course.attendance.late} | Absent: ${course.attendance.absent}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  alert.innerHTML = `
+    <div class="alert-header">
+      <i class="fas ${icon} alert-icon"></i>
+      <div class="alert-title">${title}</div>
+    </div>
+    <p class="alert-subtitle">${subtitle}</p>
+    <div class="alert-classes">
+      ${coursesHTML}
+    </div>
+  `;
+
+  return alert;
+}
+
+// ========================================
+// INITIALIZE PAGE
+// ========================================
+document.addEventListener('DOMContentLoaded', function() {
+  // Check authentication
+  const user = checkAuth();
+  if (!user) return;
+
+  // Get user ID from URL
+  const userId = getUserIdFromURL();
+  if (!userId) {
+    alert('No user ID specified');
+    window.location.href = '../userlist/index.html';
+    return;
+  }
+
+  // Fetch student detail
+  fetchStudentDetail(userId);
+
+  // Auto-refresh every 30 seconds
+  setInterval(() => {
+    fetchStudentDetail(userId);
+  }, 30000);
+});

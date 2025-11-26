@@ -30,7 +30,6 @@
         </nav>
       </div>
       <div class="frame">
-  <img class="image" src="../../../img/livecam.png" />
         <div class="div">
           <div class="text-wrapper">Log</div>
           <div class="filter-container">
@@ -39,54 +38,27 @@
             </div>
             <div class="filter-overlay" onclick="closeFilter()"></div>
             <div class="filter-popup">
-              <div class="filter-option" onclick="filterBy('all')">All</div>
-              <div class="filter-option" onclick="filterBy('present')">Present</div>
-              <div class="filter-option" onclick="filterBy('late')">Late</div>
+              <div class="filter-option active" data-filter="all" onclick="filterBy('all')">All</div>
+              <div class="filter-option" data-filter="present" onclick="filterBy('present')">Present</div>
+              <div class="filter-option" data-filter="late" onclick="filterBy('late')">Late</div>
             </div>
           </div>
         </div>
-        <div class="frame-2">
+        <div class="table-container">
+          <div class="frame-2">
             <div class="frame-3">
               <div class="div-wrapper"><div class="text-wrapper-2">NIM</div></div>
               <div class="div-wrapper"><div class="text-wrapper-2">Name</div></div>
+              <div class="div-wrapper"><div class="text-wrapper-2">Date</div></div>
+              <div class="div-wrapper"><div class="text-wrapper-2">Time</div></div>
               <div class="div-wrapper"><div class="text-wrapper-2">Status</div></div>
             </div>
-            <div class="frame-4">
-              <div class="frame-5"><div class="text-wrapper-3">01082230017</div></div>
-              <div class="frame-5"><div class="text-wrapper-3">Rafelixa Reynard Isak</div></div>
-              <div class="frame-5"><div class="text-wrapper-4">PRESENT</div></div>
-            </div>
-            <div class="frame-6">
-              <div class="frame-5"><div class="text-wrapper-3">01082230015</div></div>
-              <div class="frame-5"><div class="text-wrapper-3">Teofilus Satria Rada Insani</div></div>
-              <div class="frame-5"><div class="text-wrapper-4">PRESENT</div></div>
-            </div>
-            <div class="frame-7">
-              <div class="frame-5"><div class="text-wrapper-3">01082230016</div></div>
-              <div class="frame-5"><div class="text-wrapper-3">Joko Armando Setiabudi</div></div>
-              <div class="frame-5"><div class="text-wrapper-4">PRESENT</div></div>
-            </div>
-            <div class="frame-8">
-              <div class="frame-5"><div class="text-wrapper-3">01082230023</div></div>
-              <div class="frame-5"><div class="text-wrapper-3">Putra Futsal</div></div>
-              <div class="frame-5"><div class="text-wrapper-5">LATE</div></div>
-            </div>
-            <div class="frame-9">
-              <div class="frame-5"><div class="text-wrapper-3">01082230031</div></div>
-              <div class="frame-5"><div class="text-wrapper-3">Benaya Simamora</div></div>
-              <div class="frame-5"><div class="text-wrapper-4">PRESENT</div></div>
-            </div>
-            <div class="frame-10">
-              <div class="frame-5"><div class="text-wrapper-3">01082230018</div></div>
-              <div class="frame-5"><div class="text-wrapper-3">Ben Majesty Adrah Nesta</div></div>
-              <div class="frame-5"><div class="text-wrapper-4">PRESENT</div></div>
-            </div>
-            <div class="frame-11">
-              <div class="frame-5"><div class="text-wrapper-3">01082230010</div></div>
-              <div class="frame-5"><div class="text-wrapper-3">Simon</div></div>
-              <div class="frame-5"><div class="text-wrapper-5">LATE</div></div>
+            <!-- Attendance rows will be loaded here dynamically -->
+            <div id="loading" class="loading-indicator">
+              <i class="fas fa-spinner fa-spin"></i> Loading attendance logs...
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
