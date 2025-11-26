@@ -4,6 +4,7 @@
   min-height: 100vh;
   position: relative;
   font-family: 'Poppins', sans-serif;
+  padding-bottom: 80px;
 }
 
 .user-list .rectangle {
@@ -116,19 +117,21 @@
   display: flex;
   flex-direction: column;
   width: min(1000px, 90%);
-  min-height: 600px;
+  min-height: 400px;
+  max-height: calc(100vh - 200px);
   align-items: flex-start;
   gap: 16px;
-  padding: 32px 40px;
+  padding: 32px 40px 40px;
   position: absolute;
   top: 136px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #ffffff;
   border-radius: 12px;
-  overflow: visible;
+  overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid #e9ecef;
+  margin-bottom: 60px;
 }
 
 .user-list .div {
@@ -238,27 +241,45 @@
 }
 
 .user-list .frame-2 {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: 70px repeat(7, 60px);
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  gap: 0;
+  max-height: calc(100vh - 380px);
+  overflow-y: auto;
   border-radius: 8px;
-  overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   background-color: #ffffff;
   border: 1px solid #e9ecef;
   margin-top: 20px;
 }
 
+.user-list .frame-2::-webkit-scrollbar {
+  width: 8px;
+}
+
+.user-list .frame-2::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.user-list .frame-2::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 8px;
+}
+
+.user-list .frame-2::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .user-list .frame-3 {
-  grid-row: 1 / 2;
-  grid-column: 1 / 4;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 150px 2fr 120px;
   width: 100%;
   background-color: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 2px solid #dee2e6;
 }
 
 .user-list .div-wrapper {
@@ -296,73 +317,18 @@
 }
 
 /* Table Row Styling */
-.user-list .frame-4 {
-  grid-row: 2 / 3;
-  grid-column: 1 / 4;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
+.user-list .frame-4,
 .user-list .frame-6 {
-  grid-row: 3 / 4;
-  grid-column: 1 / 4;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.user-list .frame-7 {
-  grid-row: 4 / 5;
-  grid-column: 1 / 4;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.user-list .frame-8 {
-  grid-row: 5 / 6;
-  grid-column: 1 / 4;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.user-list .frame-9 {
-  grid-row: 6 / 7;
-  grid-column: 1 / 4;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.user-list .frame-10 {
-  grid-row: 7 / 8;
-  grid-column: 1 / 4;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.user-list .frame-11 {
-  grid-row: 8 / 9;
-  grid-column: 1 / 4;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-/* Row hover effects - Entire row highlights on hover */
-.user-list .frame-4:hover,
-.user-list .frame-6:hover,
-.user-list .frame-7:hover,
-.user-list .frame-8:hover,
-.user-list .frame-9:hover,
-.user-list .frame-10:hover,
-.user-list .frame-11:hover {
+  grid-template-columns: 150px 2fr 120px;
+  width: 100%;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
   cursor: pointer;
 }
 
-.user-list .frame-4:hover .frame-5,
-.user-list .frame-6:hover .frame-5,
-.user-list .frame-7:hover .frame-5,
-.user-list .frame-8:hover .frame-5,
-.user-list .frame-9:hover .frame-5,
-.user-list .frame-10:hover .frame-5,
-.user-list .frame-11:hover .frame-5 {
+.user-list .frame-4:hover,
+.user-list .frame-6:hover {
   background-color: #f8f9fa;
 }
 
@@ -370,18 +336,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 16px 12px;
   border-right: 1px solid #e9ecef;
-  border-bottom: 1px solid #e9ecef;
   background-color: #ffffff;
 }
 
-.user-list .frame-5:nth-child(3n) {
-  border-right: none;
+.user-list .frame-5:first-child {
+  justify-content: flex-start;
+  padding-left: 20px;
+  font-weight: 500;
 }
 
-.user-list .frame-11 .frame-5 {
-  border-bottom: none;
+.user-list .frame-5:nth-child(2) {
+  justify-content: flex-start;
+  padding-left: 20px;
+}
+
+.user-list .frame-5:last-child {
+  border-right: none;
 }
 
 .user-list .text-wrapper-3 {

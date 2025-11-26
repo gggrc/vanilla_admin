@@ -16,9 +16,13 @@ function closeFilter() {
   document.querySelector('.filter-overlay').style.display = 'none';
 }
 
-function filterBy(tolerance) {
-  // Implement filter logic here
+let currentFilter = 'all';
+let allStudentsData = [];
+
+async function filterBy(tolerance) {
   console.log('Filter by:', tolerance);
+  
+  currentFilter = tolerance;
   
   // Remove active class from all options
   document.querySelectorAll('.filter-option').forEach(option => {
@@ -28,17 +32,8 @@ function filterBy(tolerance) {
   // Add active class to clicked option
   event.target.classList.add('active');
   
-  // Filter logic based on tolerance status
-  if (tolerance === 'all') {
-    // Show all users
-    console.log('Showing all users');
-  } else if (tolerance === 'past') {
-    // Show users with past tolerance
-    console.log('Showing users with past tolerance');
-  } else if (tolerance === 'reach') {
-    // Show users who reach tolerance
-    console.log('Showing users who reach tolerance');
-  }
+  // Fetch students with tolerance data
+  await fetchStudentsWithTolerance(tolerance);
   
   closeFilter();
 }
@@ -69,10 +64,13 @@ function checkAuth() {
 }
 
 // ========================================
-// FETCH STUDENTS FROM API
+// FETCH STUDENTS WITH TOLERANCE DATA
 // ========================================
-async function fetchStudents() {
+async function fetchStudentsWithTolerance(filter = 'all') {
   try {
+    showLoading();
+    
+    // Fetch all students first
     const response = await fetch(`${API_URL}/users/students`, {
       method: 'GET',
       headers: {
@@ -82,16 +80,65 @@ async function fetchStudents() {
 
     const data = await response.json();
 
-    if (data.success) {
-      displayStudents(data.data.students);
-    } else {
+    if (!data.success) {
       console.error('Failed to fetch students:', data.message);
       showError('Failed to load student data');
+      return;
     }
+
+    const students = data.data.students;
+    
+    // Fetch tolerance info for each student
+    const studentsWithTolerance = await Promise.all(
+      students.map(async (student) => {
+        try {
+          const detailResponse = await fetch(`${API_URL}/users/students/${student.user_id}`);
+          const detailData = await detailResponse.json();
+          
+          if (detailData.success) {
+            return {
+              ...student,
+              tolerance: detailData.data.tolerance
+            };
+          }
+          return student;
+        } catch (err) {
+          console.error(`Error fetching tolerance for ${student.user_id}:`, err);
+          return student;
+        }
+      })
+    );
+
+    allStudentsData = studentsWithTolerance;
+    
+    // Apply filter
+    let filteredStudents = studentsWithTolerance;
+    
+    if (filter === 'past') {
+      // Show students who exceeded tolerance (> 3)
+      filteredStudents = studentsWithTolerance.filter(s => 
+        s.tolerance && s.tolerance.exceeded && s.tolerance.exceeded.length > 0
+      );
+    } else if (filter === 'reach') {
+      // Show students who reached tolerance (= 3)
+      filteredStudents = studentsWithTolerance.filter(s => 
+        s.tolerance && s.tolerance.reached && s.tolerance.reached.length > 0
+      );
+    }
+    
+    displayStudents(filteredStudents);
+    
   } catch (error) {
     console.error('Error fetching students:', error);
     showError('Connection error. Please check if backend is running.');
   }
+}
+
+// ========================================
+// FETCH STUDENTS FROM API (Legacy - for initial load)
+// ========================================
+async function fetchStudents() {
+  await fetchStudentsWithTolerance('all');
 }
 
 // ========================================
@@ -160,12 +207,48 @@ function displayStudents(students) {
 }
 
 // ========================================
+// LOADING INDICATOR
+// ========================================
+function showLoading() {
+  const container = document.querySelector('.frame-2');
+  if (!container) return;
+
+  const header = container.querySelector('.frame-3');
+  container.innerHTML = '';
+  
+  if (header) {
+    container.appendChild(header);
+  }
+
+  const loading = document.createElement('div');
+  loading.className = 'loading-message';
+  loading.style.textAlign = 'center';
+  loading.style.padding = '40px';
+  loading.style.color = '#666';
+  loading.innerHTML = '<i class="fas fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 10px;"></i><p>Loading students data...</p>';
+  container.appendChild(loading);
+}
+
+// ========================================
 // ERROR DISPLAY
 // ========================================
 function showError(message) {
-  console.error(message);
-  // Only show alert for critical errors, not for refresh failures
-  // alert(message);
+  const container = document.querySelector('.frame-2');
+  if (!container) return;
+
+  const header = container.querySelector('.frame-3');
+  container.innerHTML = '';
+  
+  if (header) {
+    container.appendChild(header);
+  }
+
+  const errorDiv = document.createElement('div');
+  errorDiv.style.textAlign = 'center';
+  errorDiv.style.padding = '40px';
+  errorDiv.style.color = '#dc3545';
+  errorDiv.innerHTML = `<i class="fas fa-exclamation-circle" style="font-size: 24px; margin-bottom: 10px;"></i><p>${message}</p>`;
+  container.appendChild(errorDiv);
 }
 
 // ========================================

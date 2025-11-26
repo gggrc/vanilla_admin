@@ -1,10 +1,13 @@
 // Navigation functionality for admin pages
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🧭 Navigation.js loaded');
+    
     // Add navigation functionality to all admin pages
     
     // Back button functionality (already handled by href, but add visual feedback)
     const backButton = document.querySelector('.back-button');
     if (backButton) {
+        console.log('✅ Back button found');
         backButton.addEventListener('mouseenter', function() {
             this.style.transform = 'translateX(-2px)';
             this.style.transition = 'transform 0.2s ease';
@@ -13,10 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
         backButton.addEventListener('mouseleave', function() {
             this.style.transform = 'translateX(0)';
         });
+    } else {
+        console.log('⚠️ Back button not found');
     }
 
     // Navigation menu items
     const navLinks = document.querySelectorAll('.frame-12 a, .div-wrapper-2');
+    console.log('🔗 Found', navLinks.length, 'navigation links');
+    
     navLinks.forEach(link => {
         if (link) {
             link.addEventListener('mouseenter', function() {

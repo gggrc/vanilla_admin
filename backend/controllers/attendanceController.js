@@ -17,15 +17,16 @@ const getAttendanceLogs = async (req, res) => {
         attendance_date,
         recorded_at,
         enrollments!inner (
+          enrollment_id,
           user_id,
           course_id,
-          users (
+          users!inner (
             user_id,
             nim,
             full_name,
             email
           ),
-          courses (
+          courses!inner (
             course_id,
             course_code,
             course_name
@@ -112,15 +113,16 @@ const getTodayAttendanceLogs = async (req, res) => {
         attendance_date,
         recorded_at,
         enrollments!inner (
+          enrollment_id,
           user_id,
           course_id,
-          users (
+          users!inner (
             user_id,
             nim,
             full_name,
             email
           ),
-          courses (
+          courses!inner (
             course_id,
             course_code,
             course_name

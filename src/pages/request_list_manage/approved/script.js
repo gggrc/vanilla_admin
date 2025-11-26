@@ -36,35 +36,27 @@ function getPermissionIdFromURL() {
 // ========================================
 async function fetchPermissionDetail(permissionId) {
   try {
-    console.log('🔍 Fetching permission detail for ID:', permissionId);
     showLoading();
     
-    const url = `${API_URL}/permissions/${permissionId}`;
-    console.log('📡 API URL:', url);
-    
-    const response = await fetch(url, {
+    const response = await fetch(`${API_URL}/permissions/${permissionId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       }
     });
 
-    console.log('📥 Response status:', response.status);
-    
     const data = await response.json();
-    console.log('📦 Response data:', data);
 
     if (!data.success) {
-      console.error('❌ Failed to fetch permission detail:', data.message);
-      showError('Failed to load permission detail: ' + data.message);
+      console.error('Failed to fetch permission detail:', data.message);
+      showError('Failed to load permission detail');
       return null;
     }
 
-    console.log('✅ Permission detail fetched successfully');
     return data.data;
     
   } catch (error) {
-    console.error('❌ Error fetching permission detail:', error);
+    console.error('Error fetching permission detail:', error);
     showError('Connection error. Please check if backend is running.');
     return null;
   }
@@ -239,39 +231,6 @@ function formatDateFull(dateString) {
 }
 
 // ========================================
-// UPDATE PERMISSION STATUS
-// ========================================
-async function updatePermissionStatus(permissionId, status, adminId) {
-  try {
-    const response = await fetch(`${API_URL}/permissions/${permissionId}/status`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        status: status,
-        admin_id: adminId
-      })
-    });
-
-    const data = await response.json();
-
-    if (!data.success) {
-      console.error('Failed to update permission status:', data.message);
-      alert(`Failed to ${status} permission: ${data.message}`);
-      return false;
-    }
-
-    return true;
-    
-  } catch (error) {
-    console.error('Error updating permission status:', error);
-    alert('Connection error. Please check if backend is running.');
-    return false;
-  }
-}
-
-// ========================================
 // LOADING INDICATOR
 // ========================================
 function showLoading() {
@@ -355,53 +314,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   
   if (permission) {
     displayPermissionDetail(permission);
-    
-    // Setup button handlers
-    const approveBtn = document.querySelector('.btn-approve');
-    const rejectBtn = document.querySelector('.btn-reject');
-    
-    if (approveBtn) {
-      approveBtn.addEventListener('click', async () => {
-        if (confirm('Are you sure you want to APPROVE this permission request?')) {
-          approveBtn.disabled = true;
-          rejectBtn.disabled = true;
-          approveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Approving...';
-          
-          const success = await updatePermissionStatus(permissionId, 'approved', user.user_id);
-          
-          if (success) {
-            alert('Permission approved successfully!');
-            window.location.href = '../../request_list/index.html';
-          } else {
-            approveBtn.disabled = false;
-            rejectBtn.disabled = false;
-            approveBtn.innerHTML = 'Approve';
-          }
-        }
-      });
-    }
-    
-    if (rejectBtn) {
-      rejectBtn.addEventListener('click', async () => {
-        if (confirm('Are you sure you want to REJECT this permission request?')) {
-          rejectBtn.disabled = true;
-          approveBtn.disabled = true;
-          rejectBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Rejecting...';
-          
-          const success = await updatePermissionStatus(permissionId, 'rejected', user.user_id);
-          
-          if (success) {
-            alert('Permission rejected successfully!');
-            window.location.href = '../../request_list/index.html';
-          } else {
-            rejectBtn.disabled = false;
-            approveBtn.disabled = false;
-            rejectBtn.innerHTML = 'Reject';
-          }
-        }
-      });
-    }
   }
   
-  console.log('✅ Request Manage (Pending) page initialized');
+  console.log('✅ Request Manage (Approved) page initialized');
 });
