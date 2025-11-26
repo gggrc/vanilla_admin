@@ -33,6 +33,7 @@ const getAttendanceLogs = async (req, res) => {
           )
         )
       `)
+      .in('status', ['present', 'late']) // Only show present and late status
       .order('attendance_date', { ascending: false })
       .order('recorded_at', { ascending: false })
       .limit(100); // Limit to latest 100 records
@@ -130,6 +131,7 @@ const getTodayAttendanceLogs = async (req, res) => {
         )
       `)
       .eq('attendance_date', today)
+      .in('status', ['present', 'late']) // Only show present and late status
       .order('attendance_date', { ascending: false })
       .order('recorded_at', { ascending: false });
 
