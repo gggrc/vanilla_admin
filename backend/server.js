@@ -25,6 +25,23 @@ app.use('/api/users', userRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/permissions', permissionRoutes);
 
+// --- START PERBAIKAN DEPLOYMENT FRONTEND ---
+
+// 1. Tentukan path absolut ke folder 'public'
+const publicDir = path.join(__dirname, '..', 'public');
+
+// 2. Melayani file statis dari folder 'public'
+// Ini akan membuat semua aset (CSS, JS, images) di dalam 'public' dapat diakses dari root server.
+app.use(express.static(publicDir));
+
+// 3. Tentukan rute root '/' untuk mengarahkan ke halaman login sebagai entry point
+app.get('/', (req, res) => {
+  res.sendFile(path.join(publicDir, 'pages', 'login', 'index.html'));
+});
+
+// --- END PERBAIKAN DEPLOYMENT FRONTEND ---
+
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend server is running' });
