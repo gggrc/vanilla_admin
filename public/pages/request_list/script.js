@@ -545,7 +545,8 @@ function filterByWeek() {
   
   // Filter permissions within the week
   const filtered = allPermissions.filter(permission => {
-    const permDate = new Date(permission.permission_date + 'T00:00:00');
+    // FIX: Add 'T00:00:00' to ensure consistent date parsing to avoid timezone issues
+    const permDate = new Date(permission.permission_date + 'T00:00:00'); 
     const isInRange = permDate >= weekStart && permDate <= weekEnd;
     console.log('Date:', permission.permission_date, 'In range?', isInRange);
     return isInRange;
