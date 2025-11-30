@@ -1,7 +1,16 @@
 // ========================================
-// API CONFIGURATION
+// API CONFIGURATION - MODIFIED FOR DEPLOYMENT/LOCAL CONSISTENCY
 // ========================================
-const API_URL = 'http://localhost:3000/api';
+function getApiUrl() {
+  const isLocalDevPort = window.location.port === '5500'; 
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  
+  if (isLocalhost && isLocalDevPort) {
+    return 'http://localhost:3000/api';
+  }
+  return '/api';
+}
+const API_URL = getApiUrl();
 
 // ========================================
 // AUTHENTICATION CHECK
@@ -40,7 +49,7 @@ async function fetchPermissionDetail(permissionId) {
     showLoading();
     
     const url = `${API_URL}/permissions/${permissionId}`;
-    console.log('📡 API URL:', url);
+    console.log('藤 API URL:', url);
     
     const response = await fetch(url, {
       method: 'GET',
@@ -49,10 +58,10 @@ async function fetchPermissionDetail(permissionId) {
       }
     });
 
-    console.log('📥 Response status:', response.status);
+    console.log('踏 Response status:', response.status);
     
     const data = await response.json();
-    console.log('📦 Response data:', data);
+    console.log('逃 Response data:', data);
 
     if (!data.success) {
       console.error('[ERROR] Failed to fetch permission detail:', data.message);
@@ -74,7 +83,7 @@ async function fetchPermissionDetail(permissionId) {
 // DISPLAY PERMISSION DETAIL
 // ========================================
 function displayPermissionDetail(permission) {
-  console.log('🎨 Displaying permission detail:', permission);
+  console.log('耳 Displaying permission detail:', permission);
   
   // Hide loading overlay
   hideLoading();

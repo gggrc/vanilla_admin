@@ -7,8 +7,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const usernameInput = document.getElementById('username');
     const loginButton = document.querySelector('.login-button');
 
-    // Backend API URL
-    const API_URL = 'http://localhost:3000/api';
+    // Backend API URL - MODIFIED FOR DEPLOYMENT/LOCAL CONSISTENCY
+    function getApiUrl() {
+      const isLocalDevPort = window.location.port === '5500'; 
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      
+      if (isLocalhost && isLocalDevPort) {
+        return 'http://localhost:3000/api';
+      }
+      return '/api';
+    }
+    const API_URL = getApiUrl();
 
     // Password visibility toggle
     if (passwordToggle && passwordInput) {

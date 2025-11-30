@@ -1,7 +1,16 @@
 // ========================================
-// CONFIGURATION
+// CONFIGURATION - MODIFIED FOR DEPLOYMENT/LOCAL CONSISTENCY
 // ========================================
-const API_URL = 'http://localhost:3000/api';
+function getApiUrl() {
+  const isLocalDevPort = window.location.port === '5500'; 
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  
+  if (isLocalhost && isLocalDevPort) {
+    return 'http://localhost:3000/api';
+  }
+  return '/api';
+}
+const API_URL = getApiUrl();
 let allLogs = [];
 let currentFilter = 'all';
 let refreshInterval;

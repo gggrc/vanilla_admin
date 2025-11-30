@@ -3,8 +3,17 @@
 // Fetch real data from Supabase via Backend API
 // ========================================
 
-// API Configuration
-const API_URL = 'http://localhost:3000/api';
+// API Configuration - MODIFIED FOR DEPLOYMENT/LOCAL CONSISTENCY
+function getApiUrl() {
+  const isLocalDevPort = window.location.port === '5500'; 
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  
+  if (isLocalhost && isLocalDevPort) {
+    return 'http://localhost:3000/api';
+  }
+  return '/api';
+}
+const API_URL = getApiUrl();
 
 // ========================================
 // AUTHENTICATION CHECK
