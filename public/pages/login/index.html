@@ -4,24 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Attendance Admin - Login</title>
-    <link rel="stylesheet" href="../../../global.css">
-    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/pages/login/style.css">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="login">
         <div class="login-container">
-            <!-- User Icon -->
             <div class="user-icon">
                 <i class="fas fa-user-circle"></i>
             </div>
             
-            <!-- Login Title -->
             <h1 class="login-title">Login</h1>
             
-            <!-- Login Form -->
             <form class="login-form" id="loginForm">
-                <!-- Username Field -->
                 <div class="form-group">
                     <label for="username" class="form-label">Username</label>
                     <input 
@@ -34,7 +32,6 @@
                     >
                 </div>
                 
-                <!-- Password Field -->
                 <div class="form-group">
                     <label for="password" class="form-label">Password</label>
                     <div class="password-wrapper">
@@ -52,22 +49,19 @@
                     </div>
                 </div>
                 
-                <!-- Forgot Password Link -->
                 <div class="forgot-password">
                     <a href="#" class="forgot-link">Forgot Password?</a>
                 </div>
                 
-                <!-- Login Button -->
                 <button type="submit" class="login-button">Log in</button>
             </form>
             
-            <!-- Error Message -->
             <div class="error-message" id="errorMessage" style="display: none;">
                 Invalid username or password. Please try again.
             </div>
         </div>
     </div>
     
-    <script src="script.js"></script>
+    <script src="/pages/login/script.js"></script>
 </body>
 </html>
